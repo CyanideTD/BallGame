@@ -3,10 +3,9 @@
 
 #include <QGraphicsItem>
 
-class GraphicsItem : public QGraphicsItem
-{
+class GraphicsItem : public QGraphicsItem {
 public:
-  GraphicsItem(const int id, const int index);
+  GraphicsItem(const int id, const int index = 0);
 
   void SetId(const int id);
   void SetIndex(const int index);

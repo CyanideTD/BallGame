@@ -1,6 +1,7 @@
 #ifndef DIAGRAMPOLYGON_H
 #define DIAGRAMPOLYGON_H
 
+#include <QPainter>
 #include <graphicsitem.h>
 
 class DiagramPolygon : public GraphicsItem {

@@ -1,11 +1,13 @@
 #ifndef DIAGRAMENTITY_H
 #define DIAGRAMENTITY_H
 
+#include <entity.h>
 #include <diagrampolygon.h>
 #include <diagrampoint.h>
-#include <entity.h>
+#include <diagram.h>
+#include <QGraphicsScene>
 
-class DiagramEntity {
+class DiagramEntity : public Diagram  {
 public:
   explicit DiagramEntity(const int id, const std::vector<QPointF>& points, const EntityType type) noexcept;
   ~DiagramEntity() = default;
@@ -14,10 +16,11 @@ public:
 
   std::vector<DiagramPoint *> GetPoint() const;
 
-public slots:
   void OnTypeChanged(const EntityType& type);
 
   void OnShapeChanged(const int id, const std::vector<QPointF>& points);
+
+  void Draw(QGraphicsScene* scene);
 
 private:
 

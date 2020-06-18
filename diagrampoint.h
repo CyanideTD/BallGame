@@ -1,6 +1,7 @@
 #ifndef DIAGRAMPOINT_H
 #define DIAGRAMPOINT_H
 
+#include <QPainter>
 #include "graphicsitem.h"
 
 class DiagramPoint : public GraphicsItem {
@@ -14,7 +15,7 @@ public:
   void SetBrush(const QBrush& brush);
 
   QPen GetPen() const;
-  void SetPen(const QBrush& pen);
+  void SetPen(const QPen& pen);
 
 public:
   QRectF boundingRect() const override;
@@ -27,7 +28,7 @@ protected:
 private:
   QBrush brush_;
   QPen pen_;
-  qreal radius_;
+  qreal radius_ = 5;
 };
 
 #endif // DIAGRAMPOINT_H

@@ -2,10 +2,10 @@
 #include <QPainter>
 #include "diagrampoint.h"
 
-DiagramPoint::DiagramPoint(const QPointF &pos, const int id, const int index) {
-  GraphicsItem(id, index);
+DiagramPoint::DiagramPoint(const QPointF &pos, const int id, const int index)
+  : GraphicsItem(id, index) {
   setFlag(GraphicsItemFlag::ItemIsSelectable);
-  brush_.setColor(Qt::GlobalColor::red);
+  brush_.setColor(Qt::GlobalColor::black);
   pen_.setWidth(1);
   SetPos(pos);
 }
@@ -26,17 +26,17 @@ void DiagramPoint::SetBrush(const QBrush &brush) {
 }
 
 QPen DiagramPoint::GetPen() const {
-  return brush_;
+  return pen_;
 }
 
-void DiagramPoint::SetPen(const QBrush &pen) {
+void DiagramPoint::SetPen(const QPen &pen) {
   prepareGeometryChange();
   pen_ = pen;
   update();
 }
 
 QRectF DiagramPoint::boundingRect() const {
-  return QRectF(-radius_, radius_, 2*radius_, 2*radius_ );
+  return QRectF(-radius_, -radius_, 2*radius_, 2*radius_ );
 }
 
 QPainterPath DiagramPoint::shape() const {
@@ -46,7 +46,9 @@ QPainterPath DiagramPoint::shape() const {
 }
 
 void DiagramPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  brush_.setStyle(
+      isSelected()? Qt::Dense4Pattern : Qt::SolidPattern);
   painter->setBrush(brush_);
-  painter->setPen(pen);
+  painter->setPen(pen_);
   painter->drawEllipse(this->boundingRect());
 }

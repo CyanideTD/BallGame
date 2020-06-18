@@ -2,10 +2,11 @@
 #define COMMANDFACTORY_H
 
 
-class CommandFactory
-{
+class CommandFactory {
 public:
   CommandFactory();
+  virtual ~CommandFactory();
+  virtual void GenerateCommand() = 0;
 };
 
 #endif // COMMANDFACTORY_H

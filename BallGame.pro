@@ -22,7 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-
+QMAKE_CXXFLAGS += -g -O0 -ggdb
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
@@ -37,7 +37,13 @@ SOURCES += \
     inputvalue.cpp \
     commandfactory.cpp \
     graphicsitem.cpp \
-    datamanager.cpp
+    datamanager.cpp \
+    view.cpp \
+    diagramscene.cpp \
+    network.cpp \
+    mediator.cpp \
+    diagram.cpp \
+    baseentity.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -52,7 +58,13 @@ HEADERS += \
     inputvalue.h \
     commandfactory.h \
     graphicsitem.h \
-    datamanager.h
+    datamanager.h \
+    view.h \
+    diagramscene.h \
+    network.h \
+    mediator.h \
+    diagram.h \
+    baseentity.h
 
 FORMS += \
         mainwindow.ui

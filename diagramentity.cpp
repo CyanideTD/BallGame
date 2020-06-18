@@ -2,9 +2,9 @@
 #include <QGraphicsScene>
 #include "diagramentity.h"
 
-DiagramEntity::DiagramEntity(const int id, const std::vector<QPointF> &points, const EntityType type) {
+DiagramEntity::DiagramEntity(const int id, const std::vector<QPointF> &points, const EntityType type) noexcept {
   polygon = new DiagramPolygon(points, id, 0);
-  for (int i = 0; i < points.size(); i++) {
+  for (unsigned int i = 0; i < points.size(); i++) {
     DiagramPoint* point = new DiagramPoint(points[i], id, i);
     points_.push_back(point);
   }
@@ -25,10 +25,12 @@ void DiagramEntity::OnTypeChanged(const EntityType& type) {
   switch (type) {
     case EntityType::FIRST_PLAYER:
         brush.setColor(Qt::GlobalColor::red);
+        brush.setStyle(Qt::BrushStyle::SolidPattern);
         pen.setColor(Qt::GlobalColor::red);
       break;
     case EntityType::SECOND_PLAYER:
       brush.setColor(Qt::GlobalColor::blue);
+      brush.setStyle(Qt::BrushStyle::SolidPattern);
       pen.setColor(Qt::GlobalColor::blue);
     default:
       break;
@@ -39,6 +41,7 @@ void DiagramEntity::OnTypeChanged(const EntityType& type) {
     polygon->SetPen(pen);
   }
 
+  brush.setColor(Qt::GlobalColor::black);
   for (auto it : points_) {
     it->SetBrush(brush);
     it->SetPen(pen);
@@ -49,10 +52,10 @@ void DiagramEntity::OnShapeChanged(const int id, const std::vector<QPointF> &poi
   if (nullptr != polygon) {
     polygon->UpdateShape(points);
   }
-  int index = 0;
+  unsigned int index = 0;
 
   for (; index < points.size(); index++) {
-    if (i < points_.size()) {
+    if (index < points_.size()) {
       points_[index]->SetPos(points[index]);
     } else {
       DiagramPoint* point = new DiagramPoint(points[index], id, index);
@@ -67,5 +70,15 @@ void DiagramEntity::OnShapeChanged(const int id, const std::vector<QPointF> &poi
       scene->removeItem(*it);
     }
     it = points_.erase(it);
+  }
+}
+
+void DiagramEntity::Draw(QGraphicsScene *scene) {
+  if (scene != nullptr) {
+    scene->addItem(polygon);
+  }
+
+  for (auto it : points_) {
+    scene->addItem(it);
   }
 }
