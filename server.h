@@ -10,6 +10,7 @@ class Server : public QObject {
 public:
   Server(DiagramScene* scene);
 
+  void Connect(std::shared_ptr<Client> client, int lag);
 signals:
   void SendState(PayLoad);
 

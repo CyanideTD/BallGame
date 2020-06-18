@@ -53,3 +53,8 @@ Server::Server(DiagramScene *scene) {
   manager_ = std::make_shared<DataManager>();
   scene_ = scene;
 }
+
+void Server::Connect(std::shared_ptr<Client> client, int lag) {
+  clients_.insert(std::make_pair(client->GetClientID(), client->GetSeq()));
+  client->SetLag(lag);
+}

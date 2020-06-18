@@ -53,14 +53,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
   qRegisterMetaType<PayLoad>("PayLoad");
 
-  player_one->SetLag(2000);
-  player_two->SetLag(4000);
+  server->Connect(player_one, 2000);
+  server->Connect(player_two, 4000);
+
   player_one->Spawn();
   player_two->Spawn();
   ui->player_one_view->GetView()->centerOn(0, 0);
   ui->player_two_view->GetView()->centerOn(0, 0);
   ui->server_view->GetView()->centerOn(0, 0);
-  player_one->SetLag(4000);
   player_one->Move();
 }
 

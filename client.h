@@ -22,6 +22,10 @@ public:
 
   void Move();
 
+  int GetSeq() { return client_seq_; }
+
+  int GetClientID() { return client_id_; }
+
 signals:
   void SendCommands(std::vector<std::shared_ptr<Command>>);
 

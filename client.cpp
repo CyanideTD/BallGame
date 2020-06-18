@@ -94,5 +94,5 @@ void Client::GetState(PayLoad payload) {
       it->Init(arg);
       it->Execute();
     }
-    }
+  }
 }
