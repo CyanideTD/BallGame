@@ -1,6 +1,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include <map>
 #include <vector>
 #include <client.h>
 
@@ -21,6 +22,8 @@ private:
   std::shared_ptr<DataManager> manager_;
   DiagramScene* scene_ = nullptr;
   bool stop_flag_ = false;
+
+  std::map<int, int> clients_;
 };
 
 #endif // SERVER_H

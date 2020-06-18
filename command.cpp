@@ -2,6 +2,8 @@
 
 #include "command.h"
 #include <mediator.h>
+#include <diagramscene.h>
+#include <datamanager.h>
 
 
 SetTypeCommand::SetTypeCommand(const int id, const EntityType type) {
@@ -21,6 +23,11 @@ SetTypeCommand &SetTypeCommand::operator =(const SetTypeCommand &type){
   }
 
   return *this;
+}
+
+std::shared_ptr<Command> SetTypeCommand::DeepCopy() {
+  std::shared_ptr<SetTypeCommand> command = std::make_shared<SetTypeCommand>(entity_id, type_);
+  return command;
 }
 
 int SetTypeCommand::Init(const CommandArg& arg) {
@@ -62,6 +69,11 @@ MoveCommand &MoveCommand::operator =(const MoveCommand &command) {
     points_ = command.points_;
   }
   return *this;
+}
+
+std::shared_ptr<Command> MoveCommand::DeepCopy() {
+  std::shared_ptr<MoveCommand> move_command = std::make_shared<MoveCommand>(entity_id, points_);
+  return move_command;
 }
 
 int MoveCommand::Init(const CommandArg &arg) {
@@ -108,6 +120,11 @@ CreateCommand &CreateCommand::operator =(const CreateCommand &command) {
     type_ = command.type_;
   }
   return *this;
+}
+
+std::shared_ptr<Command> CreateCommand::DeepCopy() {
+  std::shared_ptr<CreateCommand> create_command = std::make_shared<CreateCommand>(entity_id, points_, type_);
+  return create_command;
 }
 
 int CreateCommand::Init(const CommandArg& arg) {
@@ -168,6 +185,11 @@ SetStateCommand &SetStateCommand::operator =(const SetStateCommand &command) {
     type_ = command.type_;
   }
   return *this;
+}
+
+std::shared_ptr<Command> SetStateCommand::DeepCopy() {
+  std::shared_ptr<SetStateCommand> command = std::make_shared<SetStateCommand>(entity_id_, points_, type_);
+  return command;
 }
 
 int SetStateCommand::Init(const CommandArg &arg) {

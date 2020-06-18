@@ -3,20 +3,24 @@
 
 #include <entity.h>
 #include <diagramentity.h>
-#include <datamanager.h>
-#include <diagramscene.h>
+
+class DiagramScene;
+class DataManager;
 
 struct CommandArg {
   std::shared_ptr<DataManager> manager;
   DiagramScene* scene = nullptr;
+  bool interpolation = false;
 };
 
 class Command {
 public:
   Command() = default;
+  virtual ~Command() {}
   virtual int Init(const CommandArg& arg) = 0;
   virtual int Execute() = 0;
   virtual std::vector<int> GetRelateIds() = 0;
+  virtual std::shared_ptr<Command> DeepCopy() = 0;
 
   bool Valid();
 
@@ -31,6 +35,7 @@ public:
   SetTypeCommand(const int id, const EntityType type);
   SetTypeCommand(const SetTypeCommand& type);
   SetTypeCommand &operator =(const SetTypeCommand& type);
+  std::shared_ptr<Command> DeepCopy();
 
   int Init(const CommandArg& arg) override;
   int Execute() override;
@@ -49,6 +54,7 @@ public:
   MoveCommand(const int id, const std::vector<QPointF>& points);
   MoveCommand(const MoveCommand& command);
   MoveCommand& operator =(const MoveCommand& command);
+  std::shared_ptr<Command> DeepCopy();
 
   int Init(const CommandArg& arg) override;
   int Execute() override;
@@ -57,6 +63,7 @@ public:
 public:
   int entity_id;
   std::vector<QPointF> points_;
+  bool interpolation = false;
 
   std::shared_ptr<Entity> entity_;
 };
@@ -67,6 +74,7 @@ public:
   CreateCommand(const int id, const std::vector<QPointF> &points, EntityType type);
   CreateCommand(const CreateCommand& command);
   CreateCommand& operator =(const CreateCommand& command);
+  std::shared_ptr<Command> DeepCopy();
   int Init(const CommandArg& arg) override;
   int Execute() override;
   std::vector<int> GetRelateIds() override;
@@ -84,6 +92,7 @@ public:
   SetStateCommand(const int id, const std::vector<QPointF> &points, const EntityType type);
   SetStateCommand(const SetStateCommand& command);
   SetStateCommand& operator =(const SetStateCommand& command);
+  std::shared_ptr<Command> DeepCopy();
   int Init(const CommandArg& arg) override;
   int Execute() override;
   std::vector<int> GetRelateIds() override;

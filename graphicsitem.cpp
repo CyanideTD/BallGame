@@ -1,8 +1,9 @@
 #include "graphicsitem.h"
 
-GraphicsItem::GraphicsItem(const int id, const int index) {
+GraphicsItem::GraphicsItem(const int id, const int index, ItemType type) {
   SetId(id);
   SetIndex(index);
+  SetType(type);
 }
 
 void GraphicsItem::SetId(const int id) {
@@ -19,4 +20,12 @@ int GraphicsItem::GetId() const {
 
 int GraphicsItem::GetIndex() const {
   return diagram_item_index_;
+}
+
+void GraphicsItem::SetType(ItemType type) {
+  type_ = type;
+}
+
+ItemType GraphicsItem::GetType() {
+  return type_;
 }

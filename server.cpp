@@ -10,7 +10,6 @@ void Server::RunOnce() {
   CommandArg arg;
   arg.manager = manager_;
   arg.scene = scene_;
-  std::map<int, int> client_seq;
   std::set<int> influence_id;
   std::vector<std::shared_ptr<Command>> commands = connect_.Receive();
   for (auto it : commands) {
@@ -20,15 +19,15 @@ void Server::RunOnce() {
     for (auto id : ids) {
       influence_id.insert(id);
     }
-    if (client_seq.count(it->client_id_) == 0) {
-      client_seq.insert(std::make_pair(it->client_id_, it->command_seq_));
+    if (clients_.count(it->client_id_) == 0) {
+      clients_.insert(std::make_pair(it->client_id_, it->command_seq_));
     } else {
-      int seq = client_seq[it->client_id_];
-      client_seq[it->client_id_] = std::max(seq, it->command_seq_);
+      int seq = clients_[it->client_id_];
+      clients_[it->client_id_] = std::max(seq, it->command_seq_);
     }
   }
 
-  for (auto client : client_seq) {
+  for (auto client : clients_) {
     PayLoad payload;
     payload.client_id_ = client.first;
     payload.command_seq_ = client.second;
@@ -39,9 +38,6 @@ void Server::RunOnce() {
         std::shared_ptr<SetStateCommand> command = std::make_shared<SetStateCommand>(
           entity->GetID(), entity->GetShape()->GetPoints(), entity->GetType()->GetType());
         payload.commands.push_back(command);
-      } else {
-          std::cout << manager_->GetEntityBuffer()->GetMapSize() << std::endl;
-        std::cout << "Error" << std::endl;
       }
     }
 

@@ -1,7 +1,7 @@
 #include "diagrampolygon.h"
 
 DiagramPolygon::DiagramPolygon(const std::vector<QPointF>& points, const int id, const int index) noexcept
-  : GraphicsItem(id, index) {
+  : GraphicsItem(id, index, ItemType::ITEM_TYPE_POLYGON) {
   setFlag(GraphicsItemFlag::ItemIsSelectable);
   brush_.setColor(Qt::GlobalColor::blue);
   pen_.setWidth(1);

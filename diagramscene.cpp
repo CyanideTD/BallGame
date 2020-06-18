@@ -1,6 +1,7 @@
 #include "diagramscene.h"
 #include <iostream>
 #include <QGraphicsSceneMouseEvent>
+#include <commandfactory.h>
 
 DiagramScene::DiagramScene(QObject *parent) : QGraphicsScene(parent) {
   QBrush brush;
@@ -9,11 +10,14 @@ DiagramScene::DiagramScene(QObject *parent) : QGraphicsScene(parent) {
   setBackgroundBrush(brush);
 }
 
+void DiagramScene::SetDataManager(std::shared_ptr<DataManager> manager) {
+  manager_ = manager;
+}
+
 void DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) {
-  mouseEvent->lastScenePos();
-  mouseEvent->pos();
-  selectedItems();
-  std::vector<QPointF> points;
+  EntityMouseMoveCommandFactory factory(manager_, this, mouseEvent);
+  std::vector<std::shared_ptr<Command>> commands = factory.GenerateCommand();
+  SendCommand(commands);
 
   QGraphicsScene::mouseMoveEvent(mouseEvent);
 }

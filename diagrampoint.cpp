@@ -3,7 +3,7 @@
 #include "diagrampoint.h"
 
 DiagramPoint::DiagramPoint(const QPointF &pos, const int id, const int index)
-  : GraphicsItem(id, index) {
+  : GraphicsItem(id, index, ItemType::ITEM_TYPE_POINT) {
   setFlag(GraphicsItemFlag::ItemIsSelectable);
   brush_.setColor(Qt::GlobalColor::black);
   pen_.setWidth(1);

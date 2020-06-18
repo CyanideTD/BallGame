@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
   server_timer = new QTimer;
-  server_timer->setInterval(100);
+  server_timer->setInterval(500);
   connect(
     server_timer,
     SIGNAL(timeout()),
